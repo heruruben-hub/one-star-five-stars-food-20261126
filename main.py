@@ -26,6 +26,12 @@ def main() -> None:
         raise ValueError("entry is only white space")
     if "\n" in text or "\r" in text:
         raise ValueError("entry must be a single line")
+    # Exactly one sentence: a single terminal full stop, and no other
+    # sentence-ending punctuation hiding a second sentence inside.
+    if not text.endswith(".") or text.count(".") != 1:
+        raise ValueError("entry must be exactly one sentence")
+    if "!" in text or "?" in text:
+        raise ValueError("entry must be exactly one sentence")
 
     out_dir = "/output"
     os.makedirs(out_dir, exist_ok=True)
